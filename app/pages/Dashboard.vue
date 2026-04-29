@@ -1,39 +1,26 @@
 <script setup>
-import { LineChart } from 'vue-chrts'
-import PageNavbar from '~/components/partial/PageNavbar'
-import SectionTitle from '~/components/partial/SectionTitle'
-import ErrorData404 from '~/components/partial/ErrorData404'
+import ModalSetting from '~/components/partial/ModalSetting'
+import Parent from '~/components/functional/dashboard/Parent'
 
 useHead({ title: 'Dashboard' })
 
-const monitor = useMonitorStore()
-const loading = ref(true)
-
-onMounted(async () => {
-  await monitor.getAll().then(() => loading.value = false)
-})
+const modalSetting = ref()
 </script>
 
 <template>
-  <div class="min-h-screen-main">
-    <PageNavbar title="Dashboard" transparent :trigger-scroll-height="2" class="h-20" />
-    <div v-if="loading || monitor.all?.data" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-1">
-      <LineChart
-        :data="monitor.all.data"
-        :categories="{
-          sales: { name: 'Sales', color: '#3b82f6' },
-          profit: { name: 'Profit', color: '#10b981' }
-        }"
-        :height="300"
-        :xFormatter="i => monitor.all.data[i].month"
-        xLabel="Month"
-        yLabel="Amount"
-      />
+  <div class="min-h-screen-main pt-4 space-y-12">
+    <div class="flex items-end justify-between gap-4 w-full">
+      <div>
+        <div class="text-3xl font-bold">
+          Hi {user} 👋
+        </div>
+        <div class="text-gray-400">
+          What are you looking for today?
+        </div>
+      </div>
+      <UButton icon="lets-icons:meatballs-menu" color="neutral" variant="solid" class="rounded-full" @click="modalSetting.open()" />
+      <ModalSetting ref="modalSetting" />
     </div>
-    <div v-else class="flex items-center w-full" style="height: calc(100dvh - (5rem + 2rem);">
-      <ErrorData404>
-        No kid activity to monitor yet
-      </ErrorData404>
-    </div>
+    <Parent />
   </div>
 </template>

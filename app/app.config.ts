@@ -6,6 +6,7 @@ export default defineAppConfig({
     },
     drawer: {
       slots: {
+        handle: '!rounded-2xl',
         container: 'pb-4 px-2 sm:px-4 lg:px-2',
         overlay: 'backdrop-filter backdrop-blur-sm'
       }

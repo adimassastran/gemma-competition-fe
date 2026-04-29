@@ -54,7 +54,7 @@ defineExpose({ open })
     </template>
     <template #body>
       <div class="space-y-2">
-        <div v-for="(m, i) in menuList" :key="i" class="flex gap-2 p-3 rounded-md border" :class="[m.id === menuList[menuList.length - 1].id ? 'border-red-300 bg-red-100 dark:bg-red-950 dark:border-red-900' : 'border-neutral-300 bg-white dark:bg-neutral-800 dark:border-neutral-700']" @click="doAction(m.id)">
+        <div v-for="(m, i) in menuList" :key="i" class="flex gap-2 p-3 rounded-xl border" :class="[m.id === menuList[menuList.length - 1].id ? 'border-red-300 bg-red-100 dark:bg-red-950 dark:border-red-900' : 'border-neutral-300 bg-white dark:bg-neutral-800 dark:border-neutral-700']" @click="doAction(m.id)">
           <UIcon :name="`lets-icons:${m.icon}`" class="size-6" />
           <div class="w-full">
             {{ m.label }}
@@ -63,7 +63,7 @@ defineExpose({ open })
       </div>
     </template>
     <template #footer>
-      <UButton label="Close" color="neutral" block size="xl" @click="showModal = false" />
+      <UButton label="Close" color="neutral" block size="xl" class="rounded-xl" @click="showModal = false" />
     </template>
   </UDrawer>
 </template>

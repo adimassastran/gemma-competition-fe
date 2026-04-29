@@ -3,9 +3,6 @@ import { en } from '@nuxt/ui/locale'
 import SplashScreen from '~/components/partial/SplashScreen'
 import UnderMaintenance from '~/components/partial/UnderMaintenance'
 import ErrorOffline from '~/components/partial/ErrorOffline'
-import ModalSetting from '~/components/partial/ModalSetting'
-
-const modalSetting = ref()
 
 useHead({
   meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
@@ -43,20 +40,8 @@ onMounted(() => {
             <NuxtPage />
             <ErrorOffline />
           </div>
-          <UButton icon="lets-icons:meatballs-menu" color="primary" variant="solid" class="setting-btn rounded-full" @click="modalSetting.open()" />
         </div>
-        <ModalSetting ref="modalSetting" />
       </div>
     </UMain>
   </UApp>
 </template>
-
-<style>
-  .setting-btn {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    @media(min-width: 640px) { right: 1.5rem; }
-    @media(min-width: 1024px) { right: calc(((100dvw - 28rem) / 2) + .5rem); }
-  }
-</style>
