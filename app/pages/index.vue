@@ -1,9 +1,9 @@
 <script setup>
-const accCookie = useCookie('acc')
+// const accCookie = useCookie('acc')
 
 onMounted(() => {
-  accCookie.value = null
-  navigateTo('/', { replace: true })
+  // accCookie.value = null
+  navigateTo('/dashboard', { replace: true })
 })
 </script>
 

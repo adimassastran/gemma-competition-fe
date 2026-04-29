@@ -1,5 +1,5 @@
 <script setup>
-import { id } from '@nuxt/ui/locale'
+import { en } from '@nuxt/ui/locale'
 import SplashScreen from '~/components/partial/SplashScreen'
 import UnderMaintenance from '~/components/partial/UnderMaintenance'
 import ErrorOffline from '~/components/partial/ErrorOffline'
@@ -30,7 +30,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <UApp :locale="id" :toaster="toaster">
+  <UApp :locale="en" :toaster="toaster">
     <UMain>
       <div>
         <div class="fixed top-0 left-0 h-dvh w-dvw">
