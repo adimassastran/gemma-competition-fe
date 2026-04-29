@@ -10,10 +10,10 @@ defineProps(['error'])
           <img :src="`/img/illu/error-${error.statusCode}.png`" class="h-full invisible">
         </div>
         <div class="font-semibold text-center text-xl text-primary">
-          {{ error.statusCode === 404 ? 'Kamu Tersesat?' : 'Ups..' }}
+          {{ error.statusCode === 404 ? 'Are you lost?' : 'Oops..' }}
         </div>
         <div>
-          {{ error.statusCode === 404 ? 'Sepertinya kamu begitu menikmati hingga akhirnya tersesat.' : 'Sepertinya terjadi kendala pada server kami.' }}
+          {{ error.statusCode === 404 ? 'Looks like you got so into it that you ended up lost.' : 'Looks like there’s an issue with our server. We will fix it soon, please try again later.' }}
         </div>
       </template>
       <template v-else>
@@ -21,7 +21,7 @@ defineProps(['error'])
           {{ error.statusCode }}
         </div>
         <div>
-          Terjadi kesalahan
+          Something went wrong
         </div>
       </template>
     </div>
@@ -30,7 +30,7 @@ defineProps(['error'])
       size="xl"
       color="primary"
       variant="solid"
-      label="Kembali"
+      label="Back"
       block
       @click="$router.back()"
     />
