@@ -20,7 +20,7 @@ const user = {
           Hi {{ user.name }} 👋
         </div>
         <div class="text-gray-400">
-          What are you looking for today?
+          {{ user.role === 'parent' ? 'What are you looking for today?' : 'What do you wanna know today?' }}
         </div>
       </div>
       <UButton icon="lets-icons:meatballs-menu" color="neutral" variant="solid" class="rounded-full" @click="modalSetting.open()" />

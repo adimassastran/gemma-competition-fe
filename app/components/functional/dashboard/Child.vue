@@ -37,7 +37,7 @@ onMounted(async () => {
               {{ m.desc }}
             </div>
             <div class="flex justify-end w-full mt-2">
-              <div class="h-7 w-7 p-1 rounded-full ml-auto bg-neutral/50 dark:bg-white/25">
+              <div class="h-7 w-7 p-1 rounded-full ml-auto bg-neutral-800/10 dark:bg-white/25">
                 <UIcon name="lets-icons:arrow-right" class="size-5" />
               </div>
             </div>
