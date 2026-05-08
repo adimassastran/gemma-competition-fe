@@ -47,3 +47,14 @@ body { @apply min-h-dvh; }
   font-optical-sizing: auto;
   font-weight: 600;
 }
+
+.chat-messages { @apply px-0; }
+.chat-messages [data-role="user"] [data-slot="content"] {
+  @apply py-2 px-3 rounded-2xl rounded-br-md border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700;
+}
+.chat-messages [data-role="system"] {
+  @apply text-center opacity-50;
+}
+.chat-messages[data-status="submitted"] [data-slot="indicator"] > * {
+  @apply bg-neutral-400 dark:bg-neutral-700;
+}

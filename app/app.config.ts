@@ -19,7 +19,7 @@ export default defineAppConfig({
     },
     button: {
       slots: {
-        base: ['rounded-xl border-2 border-b-6 transform focus:!mt-[4px] focus:translate-y-[4px] focus:border-b-2']
+        base: ['rounded-xl border-2 border-b-6 transform active:translate-y-[2px] active:border-b-2']
       },
       variants: {
         color: {
@@ -31,7 +31,7 @@ export default defineAppConfig({
     },
     textarea: {
       slots: {
-        base: ['rounded-2xl']
+        base: ['rounded-2xl transform duration-300']
       }
     }
   }

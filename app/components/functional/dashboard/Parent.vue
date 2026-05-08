@@ -15,7 +15,7 @@ onMounted(async () => {
   <div v-if="loading || monitor.all?.data" class="space-y-8">
     <div class="grid grid-cols-1 gap-2">
       <div class="col-span-1">
-        <div class="py-2 px-3 rounded-2xl border border-neutral-300 bg-white dark:bg-neutral-800 dark:border-neutral-700">
+        <div class="py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
           <span class="text-lg font-bold opacity-50">Overall understanding</span>
           <div class="text-3xl font-bold mt-2">
             57%

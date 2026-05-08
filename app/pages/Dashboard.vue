@@ -19,7 +19,7 @@ const user = {
         <div class="text-3xl font-bold">
           Hi {{ user.name }} 👋
         </div>
-        <div class="text-gray-400">
+        <div class="text-neutral-400">
           {{ user.role === 'parent' ? 'What are you looking for today?' : 'What do you wanna know today?' }}
         </div>
       </div>

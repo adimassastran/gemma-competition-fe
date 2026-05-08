@@ -62,6 +62,7 @@ defineExpose({ open })
           :color="m.id === menuList[menuList.length - 1].id ? 'error' : 'neutral'"
           block
           size="xl"
+          class="justify-start"
           @click="doAction(m.id)"
         />
       </div>
