@@ -16,9 +16,14 @@ export default defineAppConfig({
         content: 'min-w-fit'
       }
     },
-    textarea: {
+    button: {
       slots: {
         base: ['rounded-xl']
+      }
+    },
+    textarea: {
+      slots: {
+        base: ['rounded-2xl']
       }
     }
   }

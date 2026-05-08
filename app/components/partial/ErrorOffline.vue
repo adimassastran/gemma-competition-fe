@@ -17,7 +17,7 @@ const checkConnection = () => {
         <div class="bg-contain bg-center bg-no-repeat" :style="{ backgroundImage: 'url(/img/illu/error-noInternet.png)' }">
           <img src="/img/illu/error-noInternet.png" class="h-full invisible">
         </div>
-        <div class="font-semibold text-center text-xl text-primary">
+        <div class="font-header text-center text-xl text-primary">
           Internet disconnected
         </div>
         <div class="text-center">

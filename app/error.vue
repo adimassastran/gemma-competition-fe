@@ -9,7 +9,7 @@ defineProps(['error'])
         <div class="bg-contain bg-center bg-no-repeat" :style="{ backgroundImage: `url(/img/illu/error-${error.statusCode}.png)` }">
           <img :src="`/img/illu/error-${error.statusCode}.png`" class="h-full invisible">
         </div>
-        <div class="font-semibold text-center text-xl text-primary">
+        <div class="font-header text-center text-xl text-primary">
           {{ error.statusCode === 404 ? 'Are you lost?' : 'Oops..' }}
         </div>
         <div>
@@ -17,7 +17,7 @@ defineProps(['error'])
         </div>
       </template>
       <template v-else>
-        <div class="font-semibold text-center text-xl text-primary">
+        <div class="font-header text-center text-xl text-primary">
           {{ error.statusCode }}
         </div>
         <div>

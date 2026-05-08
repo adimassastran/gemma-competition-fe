@@ -2,8 +2,9 @@
 @import "@nuxt/ui";
 @import "./component/scrollbar";
 
-@theme static {
-  --font-sans: 'Lato', sans-serif;
+@theme {
+  --font-header: 'Plus Jakarta Sans', sans-serif;
+  --font-sans: 'Inter', sans-serif;
 }
 
 * { scroll-behavior: smooth; }
@@ -42,3 +43,7 @@ body { @apply min-h-dvh; }
   opacity: 0;
 }
 
+.font-header {
+  font-optical-sizing: auto;
+  font-weight: 600;
+}

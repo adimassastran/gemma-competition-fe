@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="font-semibold" style="line-height: 1.9;" :style="{ fontSize: !sub ? '1.3rem' : '1.2rem' }">
+    <div class="font-header" style="line-height: 1.9;" :style="{ fontSize: !sub ? '1.3rem' : '1.2rem' }">
       {{ title }}
     </div>
     <div class="text-gray-400">

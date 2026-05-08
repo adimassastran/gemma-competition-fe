@@ -5,6 +5,7 @@
       "name": "MenarcheCare-fe",
       "dependencies": {
         "@iconify-json/lets-icons": "^1.2.2",
+        "@nuxt/fonts": "^0.14.0",
         "@nuxt/ui": "^4.7.0",
         "@pinia/nuxt": "^0.11.3",
         "nuxt": "^4.4.2",

@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
+    '@nuxt/fonts',
     '@pinia/nuxt'
   ],
   devtools: { enabled: true },
@@ -28,5 +29,19 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
+  },
+  fonts: {
+    families: [
+      {
+        name: 'Plus Jakarta Sans',
+        provider: 'google',
+        weights: [400, 600]
+      },
+      {
+        name: 'Inter',
+        provider: 'google',
+        weights: [400]
+      }
+    ]
   }
 })
