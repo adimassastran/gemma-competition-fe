@@ -4,16 +4,16 @@
 - [X] Setup dynamic page title
 - [X] Change logo.png
 - [X] /app/app.vue: change tab icon
-- [ ] Setup layout
+- [X] Setup layout
 - [ ] Page:
-  - [ ] Dashboard:
-    - [ ] UI
+  - [ ] Home:
+    - [X] UI
     - [ ] API
   - [ ] Chat:
-    - [ ] UI
+    - [X] UI
     - [ ] API
   - [ ] Learn:
-    - [ ] UI
+    - [X] UI
     - [ ] API
   - [X] Error
 - [X] Offline state
