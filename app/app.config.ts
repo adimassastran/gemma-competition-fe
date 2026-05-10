@@ -38,6 +38,11 @@ export default defineAppConfig({
           neutral: '!text-neutral-800 !bg-neutral-200 border-neutral-400 focus:border-neutral-400/75 focus:border-neutral-400/75 dark:!text-neutral-100 dark:!bg-neutral-700 dark:border-neutral-800 dark:focus:border-neutral-800/75 dark:focus:border-neutral-800/75'
         }
       }
+    },
+    tabs: {
+      slots: {
+        list: '!rounded-xl border-2 border-b-6 border-neutral-400'
+      }
     }
   }
 })

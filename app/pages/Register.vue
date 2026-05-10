@@ -3,7 +3,11 @@ import SectionTitle from '~/components/partial/SectionTitle'
 
 // const accCookie = useCookie('acc')
 const toast = useToast()
+const tabList = [{ label: 'As parent' }, { label: 'As child' }]
 const input = ref({
+  as: { value: '0', error: null },
+  parentEmail: { value: null, error: null },
+  name: { value: null, error: null },
   email: { value: null, error: null },
   pw: { value: null, error: null }
 })
@@ -16,9 +20,11 @@ const loading = ref(false)
 // })
 
 const checkForm = () => {
-  if (input.value.email.value && input.value.pw.value) {
+  if (((input.value.as.value === '1' && input.value.parentEmail.value) || input.value.as.value !== '1') && input.value.name.value && input.value.email.value && input.value.pw.value) {
     submitForm()
   }
+  input.value.parentEmail.error = input.value.as.value === '1' && !input.value.parentEmail.value ? `Parent's email is required` : null
+  input.value.name.error = !input.value.name.value ? 'Name is required' : null
   input.value.email.error = !input.value.email.value ? 'Email is required' : null
   input.value.pw.error = !input.value.pw.value ? 'Password is required' : null
 }
@@ -33,6 +39,7 @@ const submitForm = () => {
 // const submitForm = async () => {
 //   loading.value = true
 //   await auth.login({
+//     name: input.value.name.value,
 //     email: input.value.email.value,
 //     pw: input.value.pw.value
 //   })
@@ -54,7 +61,21 @@ const submitForm = () => {
         <div class="h-12 w-12 bg-contain bg-center bg-no-repeat" :style="{ backgroundImage: 'url(/img/logo.png)' }" />
         <span class="font-header text-2xl text-primary-600">MenarcheCare</span>
       </div>
-      <SectionTitle title="Login" class="text-center" />
+      <SectionTitle title="Register" class="text-center" />
+      <UTabs v-model="input.as.value" :items="tabList" />
+      <UFormField v-if="input.as.value === '1'" label="Parent's email" :error="input.parentEmail.error">
+        <UInput
+          v-model="input.parentEmail.value"
+          type="email"
+          placeholder="parentname@mail.com"
+          size="xl"
+          :disabled="loading"
+          class="w-full"
+        />
+      </UFormField>
+      <UFormField label="Name" :error="input.name.error">
+        <UInput v-model="input.name.value" placeholder="Jane Marry" size="xl" :disabled="loading" class="w-full" />
+      </UFormField>
       <UFormField label="Email" :error="input.email.error">
         <UInput
           v-model="input.email.value"
@@ -90,7 +111,7 @@ const submitForm = () => {
         </UInput>
       </UFormField>
       <UButton
-        label="Login"
+        label="Create a new account"
         size="xl"
         block
         color="primary"
@@ -98,14 +119,14 @@ const submitForm = () => {
         :loading="loading"
         @click="checkForm"
       />
-      <USeparator label="Have no account?" />
+      <USeparator label="Already have an account?" />
       <UButton
-        label="Create a new account"
+        label="Login"
         size="xl"
         block
         color="neutral"
         variant="solid"
-        @click="navigateTo('/register')"
+        @click="navigateTo('/')"
       />
     </div>
   </div>
