@@ -1,9 +1,12 @@
 <script setup>
 import PageNavbar from '~/components/partial/PageNavbar'
 import ErrorData404 from '~/components/partial/ErrorData404'
+import ModalCheckAnswer from '~/components/functional/quiz/ModalCheckAnswer'
 
 useHead({ title: 'Quiz' })
 
+const router = useRouter()
+const modalCheckAnswer = ref()
 const input = ref(null)
 const loading = ref(false)
 const quiz = ref([
@@ -37,22 +40,43 @@ const quiz = ref([
 ])
 const currentQuiz = ref(0)
 const answer = ref([])
+const score = ref(0)
 
 const optionLetter = (i) => {
   const l = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
   return l[i]
 }
 const checkAnswer = () => {
+  let data = {}
   if (answer.value[currentQuiz.value] === quiz.value[currentQuiz.value].right) {
-    alert('Right answer')
+    data = { type: 'right' }
+    score.value++
   } else if (answer.value[currentQuiz.value] !== quiz.value[currentQuiz.value].right) {
-    alert('Wrong answer, show explanation')
+    data = {
+      type: 'wrong',
+      right: quiz.value[currentQuiz.value].right,
+      explanation: quiz.value[currentQuiz.value].explanation
+    }
   }
+  if (currentQuiz.value >= quiz.value.length - 1) {
+    data = { ...data, isLast: true }
+  }
+  modalCheckAnswer.value.open(data)
+}
+const changeQuestion = () => {
   if (currentQuiz.value < quiz.value.length - 1) {
     currentQuiz.value++
   } else {
-    alert('Show score')
+    setTimeout(() => {
+      modalCheckAnswer.value.open({
+        type: 'score',
+        score: Math.round(score.value / quiz.value.length * 100)
+      })
+    }, 500)
   }
+}
+const done = () => {
+  router.back()
 }
 </script>
 
@@ -84,5 +108,6 @@ const checkAnswer = () => {
         />
       </div>
     </div>
+    <ModalCheckAnswer ref="modalCheckAnswer" @next="changeQuestion" @done="done" />
   </div>
 </template>
