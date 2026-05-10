@@ -3,7 +3,7 @@
 
 onMounted(() => {
   // accCookie.value = null
-  navigateTo('/dashboard', { replace: true })
+  navigateTo('/home', { replace: true })
 })
 </script>
 

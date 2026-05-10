@@ -1,6 +1,6 @@
 export default defineNuxtPlugin(() => {
   const underMaintenance = false
-  const verNum = 'v0.1.4'
+  const verNum = 'v0.1.5'
   return {
     provide: {
       underMaintenance,

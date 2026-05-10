@@ -1,7 +1,7 @@
 <script setup>
 import ModalSetting from '~/components/partial/ModalSetting'
 
-useHead({ title: 'Dashboard' })
+useHead({ title: 'Home' })
 
 const modalSetting = ref()
 const Parent = defineAsyncComponent(() => import('~/components/functional/dashboard/Parent'))
