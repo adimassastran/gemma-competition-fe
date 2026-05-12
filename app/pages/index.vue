@@ -1,7 +1,8 @@
 <script setup>
 import SectionTitle from '~/components/partial/SectionTitle'
 
-// const accCookie = useCookie('acc')
+const accCookie = useCookie('acc')
+const auth = useAuthStore()
 const toast = useToast()
 const input = ref({
   email: { value: null, error: null },
@@ -10,10 +11,11 @@ const input = ref({
 const showPw = ref(false)
 const loading = ref(false)
 
-// onMounted(() => {
-//   accCookie.value = null
-//   navigateTo('/home', { replace: true })
-// })
+onMounted(() => {
+  if (accCookie.value) {
+    navigateTo('/home', { replace: true })
+  }
+})
 
 const checkForm = () => {
   if (input.value.email.value && input.value.pw.value) {
@@ -22,29 +24,24 @@ const checkForm = () => {
   input.value.email.error = !input.value.email.value ? 'Email is required' : null
   input.value.pw.error = !input.value.pw.value ? 'Password is required' : null
 }
-const submitForm = () => {
+const submitForm = async () => {
   loading.value = true
-  setTimeout(() => {
-    toast.add({ title: 'Hi name 👋', description: 'Ready to know more?' })
-    navigateTo('/home', { replace: true })
-    loading.value = false
-  }, 3000)
+  await auth.login({
+    email: input.value.email.value,
+    password: input.value.pw.value
+  })
+    .then((res) => {
+      toast.add({ title: `Hi ${res?.user?.name} 👋`, description: 'Ready to know more?', color: 'success' })
+      navigateTo('/home', { replace: true })
+    })
+    .catch((error) => {
+      const description = error.errors 
+        ? Object.values(error.errors).flat()[0] 
+        : 'Please check your input.'
+      toast.add({ title: 'Wrong email or password', description: error?.data?.message, color: 'error' })
+    })
+  loading.value = false
 }
-// const submitForm = async () => {
-//   loading.value = true
-//   await auth.login({
-//     email: input.value.email.value,
-//     pw: input.value.pw.value
-//   })
-//     .then((res) => {
-//       toast.add({ title: `Hi ${res.name} 👋`, description: 'Ready to know more?' })
-//       navigateTo('/home', { replace: true })
-//     })
-//     .catch((error) => {
-//       toast.add({ title: 'Wrong email or password', description: error?.data?.message, color: 'error' })
-//     })
-//   loading.value = false
-// }
 </script>
 
 <template>
