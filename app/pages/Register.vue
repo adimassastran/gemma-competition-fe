@@ -1,8 +1,8 @@
 <script setup>
 import SectionTitle from '~/components/partial/SectionTitle'
 
-const auth = useAuthStore()
 const accCookie = useCookie('acc')
+const auth = useAuthStore()
 const toast = useToast()
 const tabList = [{ label: 'As parent' }, { label: 'As child' }]
 const input = ref({
@@ -30,17 +30,10 @@ const checkForm = () => {
   input.value.email.error = !input.value.email.value ? 'Email is required' : null
   input.value.pw.error = !input.value.pw.value ? 'Password is required' : null
 }
-// const submitForm = () => {
-//   loading.value = true
-//   setTimeout(() => {
-//     toast.add({ title: 'Hi name 👋', description: 'Ready to know more?' })
-//     navigateTo('/home', { replace: true })
-//     loading.value = false
-//   }, 3000)
-// }
 const submitForm = async () => {
   loading.value = true
   await auth.register({
+    parent_email: input.value.parentEmail.value,
     name: input.value.name.value,
     email: input.value.email.value,
     password: input.value.pw.value,
