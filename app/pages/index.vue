@@ -52,6 +52,12 @@ const submitForm = async () => {
         <span class="font-header text-2xl text-primary-600">MenarcheCare</span>
       </div>
       <SectionTitle title="Login" class="text-center" />
+      <div class="py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
+        <span class="font-bold opacity-50">Dummy account</span>
+        <br><br><span class="font-bold">Mother:</span> mother@mail.com
+        <br><span class="font-bold">Daughter:</span> daughter@mail.com
+        <br><span class="font-bold">Password:</span> qwertyuiop
+      </div>
       <UFormField label="Email" :error="input.email.error">
         <UInput
           v-model="input.email.value"
