@@ -6,7 +6,7 @@ export const fetchApi = async (path, data) => {
   return await $fetch(`${useRuntimeConfig().public.apiBaseUrl}api/${path}`, {
     ...data,
     headers: atokCookie.value
-      ? { Authorization: `Bearer ${atokCookie.value.token}` }
+      ? { Authorization: `Bearer ${atokCookie.value}` }
       : {}
   })
     .then((res) => res)
