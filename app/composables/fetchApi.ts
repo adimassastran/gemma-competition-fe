@@ -9,10 +9,7 @@ export const fetchApi = async (path, data) => {
       ? { Authorization: `Bearer ${atokCookie.value.token}` }
       : {}
   })
-    .then((res) => {
-      console.log('FETCH', res)
-      return res
-    })
+    .then((res) => res)
     .catch((error) => {
       if (error.response.status === 401 && route.path === '/') {
         atokCookie.value = null

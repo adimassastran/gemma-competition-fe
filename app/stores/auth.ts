@@ -6,7 +6,6 @@ export const useAuthStore = defineStore('auth', () => {
   const register = async (data) => {
     try {
       const res = await fetchApi('register', { method: 'post', body: data })
-      console.log('BACK RES', res)
       const accCookie = useCookie('acc')
       const atokCookie = useCookie('atok')
       accCookie.value = res.user

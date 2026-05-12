@@ -48,12 +48,10 @@ const submitForm = async () => {
     role: input.value.as.value === '0' ? 'parent' : 'child'
   })
     .then((res) => {
-      console.log('RES', res)
       toast.add({ title: `Hi ${res?.user?.name} 👋`, description: 'Ready to know more?', color: 'success' })
       navigateTo('/home', { replace: true })
     })
     .catch((error) => {
-      console.log('VALIDATION ERRORS:', error.errors)
       const description = error.errors 
         ? Object.values(error.errors).flat()[0] 
         : 'Please check your input.'

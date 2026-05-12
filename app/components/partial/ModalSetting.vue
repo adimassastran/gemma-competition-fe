@@ -40,6 +40,11 @@ const doAction = (id) => {
         localStorage.removeItem(l)
       }
     })
+    const cookieList = document.cookie.split(';')
+    cookieList.forEach(c => {
+      const cookie = c.split('=')[0].trim()
+      document.cookie = `${cookie}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`
+    })
     setTimeout(() => location.reload(true), 1000)
   }
 }
