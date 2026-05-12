@@ -1,7 +1,8 @@
 <script setup>
 import SectionTitle from '~/components/partial/SectionTitle'
 
-// const accCookie = useCookie('acc')
+const auth = useAuthStore()
+const accCookie = useCookie('acc')
 const toast = useToast()
 const tabList = [{ label: 'As parent' }, { label: 'As child' }]
 const input = ref({
@@ -14,10 +15,11 @@ const input = ref({
 const showPw = ref(false)
 const loading = ref(false)
 
-// onMounted(() => {
-//   accCookie.value = null
-//   navigateTo('/home', { replace: true })
-// })
+onMounted(() => {
+  if (accCookie.value) {
+    navigateTo('/home', { replace: true })
+  }
+})
 
 const checkForm = () => {
   if (((input.value.as.value === '1' && input.value.parentEmail.value) || input.value.as.value !== '1') && input.value.name.value && input.value.email.value && input.value.pw.value) {
@@ -28,30 +30,37 @@ const checkForm = () => {
   input.value.email.error = !input.value.email.value ? 'Email is required' : null
   input.value.pw.error = !input.value.pw.value ? 'Password is required' : null
 }
-const submitForm = () => {
-  loading.value = true
-  setTimeout(() => {
-    toast.add({ title: 'Hi name 👋', description: 'Ready to know more?' })
-    navigateTo('/home', { replace: true })
-    loading.value = false
-  }, 3000)
-}
-// const submitForm = async () => {
+// const submitForm = () => {
 //   loading.value = true
-//   await auth.login({
-//     name: input.value.name.value,
-//     email: input.value.email.value,
-//     pw: input.value.pw.value
-//   })
-//     .then((res) => {
-//       toast.add({ title: `Hi ${res.name} 👋`, description: 'Ready to know more?' })
-//       navigateTo('/home', { replace: true })
-//     })
-//     .catch((error) => {
-//       toast.add({ title: 'Wrong email or password', description: error?.data?.message, color: 'error' })
-//     })
-//   loading.value = false
+//   setTimeout(() => {
+//     toast.add({ title: 'Hi name 👋', description: 'Ready to know more?' })
+//     navigateTo('/home', { replace: true })
+//     loading.value = false
+//   }, 3000)
 // }
+const submitForm = async () => {
+  loading.value = true
+  await auth.register({
+    name: input.value.name.value,
+    email: input.value.email.value,
+    password: input.value.pw.value,
+    password_confirmation: input.value.pw.value,
+    role: input.value.as.value === '0' ? 'parent' : 'child'
+  })
+    .then((res) => {
+      console.log('RES', res)
+      toast.add({ title: `Hi ${res?.user?.name} 👋`, description: 'Ready to know more?', color: 'success' })
+      navigateTo('/home', { replace: true })
+    })
+    .catch((error) => {
+      console.log('VALIDATION ERRORS:', error.errors)
+      const description = error.errors 
+        ? Object.values(error.errors).flat()[0] 
+        : 'Please check your input.'
+      toast.add({ title: 'Registration failed', description: description, color: 'error' })
+    })
+  loading.value = false
+}
 </script>
 
 <template>

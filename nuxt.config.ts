@@ -3,12 +3,9 @@ export default defineNuxtConfig({
     layoutTransition: { name: 'layout', mode: 'out-in' },
     pageTransition: { name: 'page', mode: 'out-in' }
   },
-  // runtimeConfig: {
-  //   public: {
-  //     apiBaseUrl: process.env.API_BASE_URL,
-  //     apiKey: process.env.API_KEY
-  //   }
-  // },
+  runtimeConfig: {
+    public: { apiBaseUrl: process.env.API_BASE_URL }
+  },
   ssr: false,
   modules: [
     '@nuxt/eslint',
