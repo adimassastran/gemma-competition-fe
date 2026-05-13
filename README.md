@@ -31,16 +31,16 @@ bun run preview
 - [X] Change logo.png
 - [X] /app/app.vue: change tab icon
 - [X] Setup layout
-- [ ] Page:
-  - [ ] Home:
+- [X] Page:
+  - [X] Home:
     - [X] UI
-    - [ ] API
-  - [ ] Chat:
+    - [X] API
+  - [X] Chat:
     - [X] UI
-    - [ ] API
-  - [ ] Learn:
+    - [X] API
+  - [X] Learn:
     - [X] UI
-    - [ ] API
+    - [X] API
   - [X] Error
 - [X] Offline state
 - [X] Splash screen
