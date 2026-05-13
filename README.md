@@ -45,4 +45,4 @@ bun run preview
 - [X] Offline state
 - [X] Splash screen
 - [X] Under maintenance state
-- [ ] Change illu
+- [X] Change illu
