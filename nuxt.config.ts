@@ -11,7 +11,8 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/ui',
     '@nuxt/fonts',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    'nuxt-charts'
   ],
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],

@@ -1,28 +1,76 @@
 <script setup>
-import { LineChart } from 'vue-chrts'
+import LoadingSpinner from '~/components/partial/LoadingSpinner'
 import SectionTitle from '~/components/partial/SectionTitle'
 import ErrorData404 from '~/components/partial/ErrorData404'
 
-const monitor = useMonitorStore()
+const stat = useStatStore()
 const loading = ref(true)
 const mainMenu = [
   { name: 'Take a quiz', desc: 'Check your understanding now', id: 'quiz' },
   { name: 'Quick learn', desc: 'Start learning with personal AI now', id: 'learn' },
 ]
+const chartData = ref([])
 
 onMounted(async () => {
-  await monitor.getAll().then(() => loading.value = false)
+  await stat.get().then(() => {
+    chartData.value = stat.stat.history.slice().reverse().map(item => ({
+      date: item.date,
+      score: item.score
+    }))
+    loading.value = false
+  })
 })
+
+const xFormatter = (i) => chartData.value[i]?.date || ''
+const yFormatter = (tick) => `${tick}%`
+
+const chartCategories = computed(() => ({
+  score: {
+    name: 'Quiz score',
+    color: 'var(--ui-primary)'
+  }
+}))
 </script>
 
 <template>
-  <div v-if="loading || monitor.all?.data" class="space-y-8">
-    <div class="grid grid-cols-1 gap-2">
+  <div class="space-y-8">
+    <div v-if="loading || stat.stat" class="grid grid-cols-2 gap-2">
       <div class="col-span-1">
-        <div class="py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
+        <div class="flex flex-col justify-between h-full py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
           <span class="text-lg font-bold opacity-50">Overall understanding</span>
-          <div class="text-3xl font-bold mt-2">
-            57%
+          <LoadingSpinner v-if="loading" class="mt-4" />
+          <div v-else class="text-3xl font-bold mt-2">
+            {{ stat.stat.total_score / stat.stat.total_question * 100 }}%
+          </div>
+        </div>
+      </div>
+      <div class="col-span-1">
+        <div class="flex flex-col justify-between h-full py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
+          <span class="text-lg font-bold opacity-50">Quiz taken</span>
+          <LoadingSpinner v-if="loading" class="mt-4" />
+          <div v-else class="text-3xl font-bold mt-2">
+            {{ stat.stat.total_quiz_taken }}
+          </div>
+        </div>
+      </div>
+      <div class="col-span-2">
+        <div class="py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
+          <span class="text-lg font-bold opacity-50">Learning progress</span>
+          <LoadingSpinner v-if="loading" class="mt-4" />
+          <div v-else class="text-3xl font-bold mt-2">
+            <BarChart
+              :data="chartData"
+              :height="300"
+              :categories="chartCategories"
+              :y-axis="['score']"
+              :x-num-ticks="chartData.length"
+              :radius="6"
+              :y-grid-line="true"
+              :x-formatter="xFormatter"
+              :y-formatter="yFormatter"
+              legend-position="top-right"
+              :hide-legend="false"
+            />
           </div>
         </div>
       </div>
@@ -46,7 +94,4 @@ onMounted(async () => {
       </div>
     </div>
   </div>
-  <ErrorData404 v-else>
-    No kid activity to monitor yet
-  </ErrorData404>
 </template>

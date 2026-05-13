@@ -1,6 +1,6 @@
 <script setup>
 import PageNavbar from '~/components/partial/PageNavbar'
-import ErrorData404 from '~/components/partial/ErrorData404'
+import LoadingSpinner from '~/components/partial/LoadingSpinner'
 import ModalCheckAnswer from '~/components/functional/quiz/ModalCheckAnswer'
 
 useHead({ title: 'Quiz' })
@@ -11,6 +11,7 @@ const toast = useToast()
 const modalCheckAnswer = ref()
 const input = ref(null)
 const loading = ref(false)
+const loadingSubmit = ref(false)
 const question = ref([])
 const currentQuiz = ref(0)
 const answer = ref([])
@@ -28,7 +29,7 @@ onMounted(async () => {
             q: q.question_text,
             option: q.options.map(opt => opt.option_text),
             right: q.options.find(opt => opt.is_correct)?.option_text || "",
-            explanation: "Just dummy explanation" 
+            explanation: q.explanation
           }
         })
       }
@@ -75,19 +76,34 @@ const changeQuestion = () => {
     }, 500)
   }
 }
-const done = () => {
-  router.back()
+const done = async () => {
+  loadingSubmit.value = true
+  await quiz.submit({
+    score: score.value,
+    total_questions: question.value.length
+  })
+    .then((res) => {
+      toast.add({ title: 'Good job 👍', description: `${(score.value / question.value.length * 100) < 60 ? 'Keep it up, you know the basic' : 'Amazing, keep yourself educated to debunk the myths'}`, color: 'success' })
+      navigateTo('/home', { replace: true })
+    })
+    .catch((error) => {
+      const description = error.errors 
+        ? Object.values(error.errors).flat()[0] 
+        : 'Please try again'
+      toast.add({ title: 'Submission failed', description: description, color: 'error' })
+    })
+  loadingSubmit.value = false
 }
 </script>
 
 <template>
   <div class="min-h-screen-main flex flex-col">
     <PageNavbar title="Quiz" transparent :trigger-scroll-height="2" class="h-20" />
+    <div v-if="loadingSubmit" class="flex items-center justify-center fixed top-0 left-0 h-dvh w-dvw">
+      <LoadingSpinner />
+    </div>
     <div v-if="loading" class="flex items-center justify-center fixed top-0 left-0 h-dvh w-dvw">
-      <svg class="size-12 animate-spin text-neutral" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-      </svg>
+      <LoadingSpinner />
     </div>
     <template v-else-if="question.length >= 1">
       <div class="space-y-4">

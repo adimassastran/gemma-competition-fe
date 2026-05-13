@@ -26,9 +26,18 @@ export const useQuizStore = defineStore('quiz', () => {
       }
     }
   }
+  const submit = async (data) => {
+    try {
+      return await fetchApi('results', { method: 'post', body: data })
+    }
+    catch (error) {
+      throw error.data
+    }
+  }
 
   return {
     all,
-    getAll
+    getAll,
+    submit
   }
 })
