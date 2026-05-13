@@ -40,7 +40,7 @@ const chartCategories = computed(() => ({
           <span class="text-lg font-bold opacity-50">Overall understanding</span>
           <LoadingSpinner v-if="loading" class="mt-4" />
           <div v-else class="text-3xl font-bold mt-2">
-            {{ stat.stat.total_score / stat.stat.total_question * 100 }}%
+            {{ Math.round(stat.stat.total_score / stat.stat.total_question * 100) }}%
           </div>
         </div>
       </div>
@@ -54,24 +54,27 @@ const chartCategories = computed(() => ({
         </div>
       </div>
       <div class="col-span-2">
-        <div class="py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
-          <span class="text-lg font-bold opacity-50">Learning progress</span>
+        <div class="pt-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
+          <span class="text-lg font-bold opacity-50">Daily progress</span>
           <LoadingSpinner v-if="loading" class="mt-4" />
-          <div v-else class="text-3xl font-bold mt-2">
-            <BarChart
-              :data="chartData"
-              :height="300"
-              :categories="chartCategories"
-              :y-axis="['score']"
-              :x-num-ticks="chartData.length"
-              :radius="6"
-              :y-grid-line="true"
-              :x-formatter="xFormatter"
-              :y-formatter="yFormatter"
-              legend-position="top-right"
-              :hide-legend="false"
-            />
-          </div>
+          <BarChart
+            v-else
+            :data="chartData"
+            :height="100"
+            :categories="chartCategories"
+            :y-axis="['score']"
+            :x-num-ticks="chartData.length"
+            :radius="6"
+            hide-x-axis
+            hide-y-axis
+            :x-formatter="xFormatter"
+            :y-formatter="yFormatter"
+            hide-legend
+            hide-tooltip
+            :padding="{ top: 0, right: 0, bottom: 0, left: 0 }"
+            :bar-padding="0"
+            class="mt-2 -mx-3"
+          />
         </div>
       </div>
     </div>

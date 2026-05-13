@@ -1,4 +1,30 @@
-# To Do
+# How to run locally
+1. Install dependencies
+```
+bun install
+```
+
+2. Add .env file
+
+3. Run
+```
+bun run dev
+```
+
+# How to build for production
+1. Build
+```
+bun run build
+```
+
+2. Add .env file
+
+3. Run
+```
+bun run preview
+```
+
+# To do
 
 - [X] Turn off auto dark mode (should be manually triggered)
 - [X] Setup dynamic page title
