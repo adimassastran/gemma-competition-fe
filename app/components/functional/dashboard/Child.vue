@@ -6,7 +6,7 @@ import ErrorData404 from '~/components/partial/ErrorData404'
 const stat = useStatStore()
 const loading = ref(true)
 const mainMenu = [
-  { name: 'Take a quiz', desc: 'Check your understanding now', id: 'quiz' },
+  { name: 'Take a quiz', desc: 'Check your understanding', id: 'quiz' },
   { name: 'Quick learn', desc: 'Start learning with personal AI now', id: 'learn' },
 ]
 const chartData = ref([])
