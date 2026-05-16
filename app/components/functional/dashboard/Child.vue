@@ -40,7 +40,7 @@ const chartCategories = computed(() => ({
           <span class="text-lg font-bold opacity-50">Overall understanding</span>
           <LoadingSpinner v-if="loading" class="mt-4" />
           <div v-else class="text-3xl font-bold mt-2">
-            {{ Math.round(stat.stat.total_score / stat.stat.total_question * 100) }}%
+            {{ stat.stat.total_score && stat.stat.total_question ? Math.round(stat.stat.total_score / stat.stat.total_question * 100) : 0 }}%
           </div>
         </div>
       </div>
