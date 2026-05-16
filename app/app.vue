@@ -34,7 +34,7 @@ onMounted(() => {
           <div class="content-space h-full bg-neutral-100 bg-contain bg-center bg-no-repeat shadow-xl dark:bg-neutral-900" style="background-size: 64px;" :style="{ backgroundImage: 'url(/img/logo.png)' }" />
         </div>
         <SplashScreen v-if="showSplashScreen" class="duration-300" :class="{ 'opacity-0': !splashScreenVisible }" style="z-index: 13;" />
-        <div class="content-space relative min-h-dvh px-2 sm:px-4 lg:px-2 dark:bg-neutral-900" :class="$route.path === '/' || $route.path === '/register' ? 'bg-primary-100' : 'bg-neutral-100'">
+        <div class="content-space relative min-h-dvh px-2 sm:px-4 lg:px-2 dark:bg-neutral-900" :class="$route.path === '/' ? 'bg-primary-100' : 'bg-neutral-100'">
           <UnderMaintenance v-if="$underMaintenance" />
           <div v-else>
             <NuxtPage />

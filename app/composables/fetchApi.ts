@@ -19,7 +19,7 @@ export const fetchApi = async (path, data) => {
       else if (error.response.status === 401) {
         atokCookie.value = null
         accCookie.value = null
-        $toast.error('Your account is not registered, try to login again')
+        $toast.error('You are not logged in, try to login again')
         navigateTo('/', { replace: true })
       }
       else {

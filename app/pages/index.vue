@@ -4,11 +4,8 @@ import SectionTitle from '~/components/partial/SectionTitle'
 const accCookie = useCookie('acc')
 const auth = useAuthStore()
 const toast = useToast()
-const input = ref({
-  email: { value: null, error: null },
-  pw: { value: null, error: null }
-})
-const showPw = ref(false)
+const as = ['Daughter', 'Mother']
+const input = ref(null)
 const loading = ref(false)
 
 onMounted(() => {
@@ -17,18 +14,11 @@ onMounted(() => {
   }
 })
 
-const checkForm = () => {
-  if (input.value.email.value && input.value.pw.value) {
-    submitForm()
-  }
-  input.value.email.error = !input.value.email.value ? 'Email is required' : null
-  input.value.pw.error = !input.value.pw.value ? 'Password is required' : null
-}
-const submitForm = async () => {
+const login = async () => {
   loading.value = true
   await auth.login({
-    email: input.value.email.value,
-    password: input.value.pw.value
+    email: input.value === as[0] ? 'daughter@mail.com' : 'mother@mail.com',
+    password: 'qwertyuiop'
   })
     .then((res) => {
       toast.add({ title: `Hi ${res?.user?.name} 👋`, description: 'Ready to know more?', color: 'success' })
@@ -37,8 +27,8 @@ const submitForm = async () => {
     .catch((error) => {
       const description = error.errors 
         ? Object.values(error.errors).flat()[0] 
-        : 'Please check your input.'
-      toast.add({ title: 'Wrong email or password', description: error?.data?.message, color: 'error' })
+        : 'Please check your selection.'
+      toast.add({ title: 'Wrong credential', description: error?.data?.message, color: 'error' })
     })
   loading.value = false
 }
@@ -51,64 +41,21 @@ const submitForm = async () => {
         <div class="h-12 w-12 bg-contain bg-center bg-no-repeat" :style="{ backgroundImage: 'url(/img/logo.png)' }" />
         <span class="font-header text-2xl text-primary-600">MenarcheCare</span>
       </div>
-      <SectionTitle title="Login" class="text-center" />
-      <div class="py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
-        <span class="font-bold opacity-50">Dummy account</span>
-        <br><br><span class="font-bold">Mother:</span> mother@mail.com
-        <br><span class="font-bold">Daughter:</span> daughter@mail.com
-        <br><span class="font-bold">Password:</span> qwertyuiop
+      <SectionTitle title="Use as" class="text-center" />
+      <div class="flex items-center justify-center gap-4">
+        <label v-for="(a, i) in as" :index="i" class="flex items-center justify-center w-full aspect-5/3 pt-3 pb-2 px-2 rounded-2xl border-2 border-b-6 outline-offset-2 outline-inverted transform active:translate-y-[4px] active:border-b-2 cursor-pointer bg-neutral-200 border-neutral-400 focus:border-neutral-400/75 focus:border-neutral-400/75 focus-visible:outline-2 has-checked:translate-y-[4px] has-checked:border-b-2 has-checked:bg-primary-400/75 has-checked:border-primary-600/75 dark:!bg-neutral-700 dark:border-neutral-800 dark:focus:border-neutral-800/75 dark:focus:border-neutral-800/75 dark:has-checked:!bg-primary-400/75">
+          <input v-model="input" type="radio" name="radioAs" :value="a" class="fixed -top-12 -left-12 opacity-0 peer" />
+          <span>{{ a }}</span>
+        </label>
       </div>
-      <UFormField label="Email" :error="input.email.error">
-        <UInput
-          v-model="input.email.value"
-          type="email"
-          placeholder="name@mail.com"
-          size="xl"
-          :disabled="loading"
-          class="w-full"
-        />
-      </UFormField>
-      <UFormField label="Password" :error="input.pw.error">
-        <UInput
-          v-model="input.pw.value"
-          :type="showPw ? 'text' : 'password'"
-          placeholder="Enter your password"
-          size="xl"
-          :disabled="loading"
-          :ui="{ trailing: 'pe-1' }"
-          class="w-full"
-        >
-          <template #trailing>
-            <UButton
-              color="neutral"
-              variant="link"
-              size="sm"
-              :icon="showPw ? 'lets-icons:view-hide' : 'lets-icons:eye'"
-              :aria-label="showPw ? 'Hide password' : 'Show password'"
-              :aria-pressed="showPw"
-              aria-controls="password"
-              @click="showPw = !showPw"
-            />
-          </template>
-        </UInput>
-      </UFormField>
       <UButton
-        label="Login"
+        label="Start"
         size="xl"
         block
         color="primary"
         variant="solid"
         :loading="loading"
-        @click="checkForm"
-      />
-      <USeparator label="Have no account?" />
-      <UButton
-        label="Create a new account"
-        size="xl"
-        block
-        color="neutral"
-        variant="solid"
-        @click="navigateTo('/register')"
+        @click="login"
       />
     </div>
   </div>
