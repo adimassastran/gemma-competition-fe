@@ -21,7 +21,7 @@ defineProps(['error'])
           {{ error.statusCode }}
         </div>
         <div>
-          Something went wrong
+          Something went wrong 🙏
         </div>
       </template>
     </div>
