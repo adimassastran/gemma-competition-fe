@@ -10,7 +10,7 @@ defineProps(['error'])
           <img :src="`/img/illu/error-${error.statusCode}.svg`" class="h-full invisible">
         </div>
         <div class="font-header text-center text-xl text-primary">
-          {{ error.statusCode === 404 ? 'Are you lost?' : 'Oops..' }}
+          {{ error.statusCode === 404 ? 'Are you lost?' : 'Oops..' }} 🙏
         </div>
         <div>
           {{ error.statusCode === 404 ? 'Looks like you got so into it that you ended up lost.' : 'Looks like there’s an issue with our server. We will fix it soon, please try again later.' }}
