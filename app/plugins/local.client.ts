@@ -1,6 +1,6 @@
 export default defineNuxtPlugin(() => {
   const underMaintenance = false
-  const verNum = 'v1.5.1'
+  const verNum = 'v1.5.2'
   const dayDiff = (d1 = new Date(), d2 = new Date()) => {
     const dt1 = new Date(d1)
     const dt2 = new Date(d2)

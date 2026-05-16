@@ -38,7 +38,7 @@ const chartCategories = computed(() => ({
           <LoadingSpinner v-if="loading" class="mt-4" />
           <div v-else class="flex items-center justify-between">
             <div class="text-3xl font-bold mt-2">
-              {{ Math.round(stat.statChild.total_score / stat.statChild.total_question * 100) }}%
+              {{ stat.statChild.total_score && stat.statChild.total_question ? Math.round(stat.statChild.total_score / stat.statChild.total_question * 100) : 0 }}%
             </div>
             <DonutChart
               :data="[
