@@ -7,16 +7,16 @@ useHead({ title: 'Quick learn' })
 const chat = useChatStore()
 const toast = useToast()
 const input = ref(null)
-const loading = ref({
-  send: false,
-  receive: false
-})
+const loading = ref(false)
 const localData = ref([])
 
-onMounted(async () => {
-  loading.value = true
+onMounted(() => getHistory())
+
+const generateId = () => Date.now().toString(36) + Math.random().toString(36).slice(2)
+const getHistory = async () => {
   await chat.getAll()
     .then((res) => {
+      localData.value = []
       for (let i = 0; i < chat.all?.data?.length; i++) {
         localData.value.push({
           ...chat.all?.data[i],
@@ -31,47 +31,30 @@ onMounted(async () => {
         : 'Please try again later.'
       toast.add({ title: 'Error occured when loading past chat', description: error?.data?.message, color: 'error' })
     })
-  loading.value = false
-})
-
-const generateId = () => Date.now().toString(36) + Math.random().toString(36).slice(2)
+}
 const checkForm = () => {
   if (input.value) {
     submitForm()
   }
 }
 const submitForm = async () => {
-  loading.value.send = true
+  loading.value = true
   await chat.send({ message: input.value })
     .then((res) => {
-      localData.value.push({
-        id: generateId(),
-        role: 'user',
-        parts: [{ type: 'text', text: input.value }]
-      })
       input.value = null
-      loading.value.receive = true
-      setTimeout(() => {
-        localData.value.push({
-          id: generateId(),
-          role: 'assistant',
-          parts: [{ type: 'text', text: JSON.parse(JSON.stringify(res.data.reply)) }]
-        })
-        loading.value.receive = false
-        console.log(localData.value)
-      }, 3000)
+      getHistory()
     })
     .catch((error) => {
       toast.add({ title: 'Something went wrong', description: error?.message, color: 'error' })
     })
-  loading.value.send = false
+  loading.value = false
 }
 </script>
 
 <template>
   <div class="min-h-screen-main flex flex-col">
     <PageNavbar title="Quick learning" transparent :trigger-scroll-height="2" class="h-20" />
-    <UChatMessages v-if="localData.length >= 1" :messages="localData" :status="loading.receive ? 'submitted' : 'ready'" class="chat-messages pb-12 mb-auto" style="--last-message-height: auto;">
+    <UChatMessages v-if="localData.length >= 1" :messages="localData" :status="loading ? 'submitted' : 'ready'" class="chat-messages pb-12 mb-auto" style="--last-message-height: auto;">
       <template #content="{ message }">
         <Comark v-if="message.role === 'assistant'">
           {{ message.content }}
@@ -89,9 +72,9 @@ const submitForm = async () => {
         <div class="flex rounded-2xl border-2 border-b-6 outline-offset-2 outline-inverted transform has-[textarea:focus]:translate-y-[4px] has-[textarea:focus]:border-b-2 bg-neutral-200 border-neutral-400 has-[textarea:focus]:border-primary-400/75 has-[textarea:focus]-visible:outline-2 has-[textarea:not(:placeholder-shown)]:flex-col has-[textarea:not(:placeholder-shown)]:gap-2 dark:!bg-neutral-700 dark:border-neutral-800">
           <UTextarea
             v-model="input"
-            :placeholder="loading.receive ? 'Waiting for answer' : localData.length < 1 ? 'Ask something..' : 'Ask more, understand more..'"
+            :placeholder="loading ? 'Waiting for answer' : localData.length < 1 ? 'Ask something..' : 'Ask more, understand more..'"
             size="xl"
-            :disabled="loading.send || loading.receive"
+            :disabled="loading"
             :rows="1"
             :maxrows="5"
             autoresize
@@ -104,7 +87,7 @@ const submitForm = async () => {
               size="xl"
               color="primary"
               variant="solid"
-              :loading="loading.send || loading.receive"
+              :loading="loading"
               @click="checkForm"
             />
           </div>
