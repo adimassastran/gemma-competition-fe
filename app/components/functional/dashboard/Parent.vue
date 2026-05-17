@@ -4,7 +4,10 @@ import SectionTitle from '~/components/partial/SectionTitle'
 import ErrorData404 from '~/components/partial/ErrorData404'
 
 const stat = useStatStore()
-const loading = ref(true)
+const loading = ref({
+  stat: true,
+  insight: true
+})
 const chartData = ref([])
 
 onMounted(async () => {
@@ -13,7 +16,10 @@ onMounted(async () => {
       date: item.date,
       score: item.score
     }))
-    loading.value = false
+    loading.value.stat = false
+  })
+  await stat.getInsight().then(() => {
+    loading.value.insight = false
   })
 })
 
@@ -29,13 +35,13 @@ const chartCategories = computed(() => ({
 </script>
 
 <template>
-  <div v-if="loading || stat.statChild">
+  <div v-if="loading.stat || loading.insight || stat.statChild || stat.insight">
     <SectionTitle :title="`${stat.statChild.child_name}'s progress`" class="mb-4" />
     <div class="grid grid-cols-2 gap-2">
       <div class="col-span-1">
         <div class="flex flex-col justify-between h-full py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
           <span class="text-lg font-bold opacity-50">Overall understanding</span>
-          <LoadingSpinner v-if="loading" class="mt-4" />
+          <LoadingSpinner v-if="loading.stat" class="mt-4" />
           <div v-else class="flex items-center justify-between">
             <div class="text-3xl font-bold mt-2">
               {{ stat.statChild.total_score && stat.statChild.total_question ? Math.round(stat.statChild.total_score / stat.statChild.total_question * 100) : 0 }}%
@@ -62,7 +68,7 @@ const chartCategories = computed(() => ({
       <div class="col-span-1">
         <div class="flex flex-col justify-between h-full py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
           <span class="text-lg font-bold opacity-50">Quiz taken</span>
-          <LoadingSpinner v-if="loading" class="mt-4" />
+          <LoadingSpinner v-if="loading.stat" class="mt-4" />
           <div v-else class="text-3xl font-bold mt-2">
             {{ stat.statChild.total_quiz_taken }}
           </div>
@@ -71,7 +77,7 @@ const chartCategories = computed(() => ({
       <div class="col-span-2">
         <div class="py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
           <span class="text-lg font-bold opacity-50">Learning progress</span>
-          <LoadingSpinner v-if="loading" class="mt-4" />
+          <LoadingSpinner v-if="loading.stat" class="mt-4" />
           <BarChart
             v-else
             :data="chartData"
@@ -90,6 +96,32 @@ const chartCategories = computed(() => ({
         </div>
       </div>
     </div>
+    <template v-if="loading.insight || stat.insight?.data">
+      <SectionTitle title="Insight for you" class="my-4" />
+      <div class="space-y-2">
+        <div class="py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
+          <span class="text-lg font-bold opacity-50">Anxiety level</span>
+          <LoadingSpinner v-if="loading.insight" class="mt-4" />
+          <div>
+            {{ stat.insight?.data?.anxiety_level }}
+          </div>
+        </div>
+        <div class="py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
+          <span class="text-lg font-bold opacity-50">Activity</span>
+          <LoadingSpinner v-if="loading.insight" class="mt-4" />
+          <div>
+            {{ stat.insight?.data?.main_topic }}
+          </div>
+        </div>
+        <div class="py-2 px-3 rounded-2xl border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700">
+          <span class="text-lg font-bold opacity-50">Parenting advice</span>
+          <LoadingSpinner v-if="loading.insight" class="mt-4" />
+          <div>
+            {{ stat.insight?.data?.parenting_advice }}
+          </div>
+        </div>
+      </div>
+    </template>
   </div>
   <ErrorData404 v-else>
     No kid activity to monitor yet

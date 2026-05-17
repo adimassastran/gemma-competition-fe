@@ -1,9 +1,11 @@
 export const useStatStore = defineStore('stat', () => {
   const stat = ref({})
   const statChild = ref({})
+  const insight = ref({})
 
   const set = data => stat.value = data
   const setChild = data => statChild.value = data
+  const setInsight = data => insight.value = data
 
   const get = async () => {
     try {
@@ -23,11 +25,22 @@ export const useStatStore = defineStore('stat', () => {
       throw error.data
     }
   }
+  const getInsight = async () => {
+    try {
+      const res = await fetchApi('parent/insight', { method: 'get' })
+      setInsight(res)
+    }
+    catch (error) {
+      throw error.data
+    }
+  }
 
   return {
     stat,
     statChild,
+    insight,
     get,
-    getChild
+    getChild,
+    getInsight
   }
 })
