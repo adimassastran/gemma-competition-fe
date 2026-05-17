@@ -14,7 +14,7 @@ export const useChatStore = defineStore('chat', () => {
     }
     else {
       try {
-        const res = await fetchApi('questions', { method: 'get' })
+        const res = await fetchApi('chat/history', { method: 'get' })
         setAll(res)
         if (process.client) {
           localStorage.setItem('stcChatAll', JSON.stringify({ since: new Date(), data: res }))

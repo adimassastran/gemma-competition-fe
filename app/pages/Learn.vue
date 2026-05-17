@@ -6,226 +6,35 @@ useHead({ title: 'Quick learn' })
 
 const chat = useChatStore()
 const toast = useToast()
-const uId = useId()
 const input = ref(null)
 const loading = ref({
   send: false,
   receive: false
 })
-// const localData = ref([
-//   {
-//     id: '6045235a-a435-46b8-989d-2df38ca2eb47',
-//     role: 'user',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'Hello, how are you?'
-//       }
-//     ]
-//   },
-//   {
-//     id: '7a92b3c1-d5f8-4e76-b8a9-3c1e5fb2e0d8',
-//     role: 'assistant',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'I am doing well, thank you for asking! How can I assist you today?'
-//       }
-//     ]
-//   },
-//   {
-//     id: '9c84d6a7-8b23-4f12-a1d5-e7f3b9c05e2a',
-//     role: 'user',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'What is the current weather in Tokyo?'
-//       }
-//     ]
-//   },
-//   {
-//     id: 'b2e5f8c3-a1d9-4e67-b3f2-c9d8e7a6b5f4',
-//     role: 'assistant',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: "Based on the latest data, Tokyo is currently experiencing sunny weather with temperatures around 24°C (75°F). It's a beautiful day with clear skies."
-//       }
-//     ]
-//   },
-//   {
-//     id: '6045235a-a435-46b8-989d-2df38ca2eb47',
-//     role: 'user',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'Hello, how are you?'
-//       }
-//     ]
-//   },
-//   {
-//     id: '7a92b3c1-d5f8-4e76-b8a9-3c1e5fb2e0d8',
-//     role: 'assistant',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'I am doing well, thank you for asking! How can I assist you today?'
-//       }
-//     ]
-//   },
-//   {
-//     id: '9c84d6a7-8b23-4f12-a1d5-e7f3b9c05e2a',
-//     role: 'user',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'What is the current weather in Tokyo?'
-//       }
-//     ]
-//   },
-//   {
-//     id: 'b2e5f8c3-a1d9-4e67-b3f2-c9d8e7a6b5f4',
-//     role: 'assistant',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: "Based on the latest data, Tokyo is currently experiencing sunny weather with temperatures around 24°C (75°F). It's a beautiful day with clear skies."
-//       }
-//     ]
-//   },
-//   {
-//     id: '6045235a-a435-46b8-989d-2df38ca2eb47',
-//     role: 'user',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'Hello, how are you?'
-//       }
-//     ]
-//   },
-//   {
-//     id: '7a92b3c1-d5f8-4e76-b8a9-3c1e5fb2e0d8',
-//     role: 'assistant',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'I am doing well, thank you for asking! How can I assist you today?'
-//       }
-//     ]
-//   },
-//   {
-//     id: '9c84d6a7-8b23-4f12-a1d5-e7f3b9c05e2a',
-//     role: 'user',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'What is the current weather in Tokyo?'
-//       }
-//     ]
-//   },
-//   {
-//     id: 'b2e5f8c3-a1d9-4e67-b3f2-c9d8e7a6b5f4',
-//     role: 'assistant',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: "Based on the latest data, Tokyo is currently experiencing sunny weather with temperatures around 24°C (75°F). It's a beautiful day with clear skies."
-//       }
-//     ]
-//   },
-//   {
-//     id: '6045235a-a435-46b8-989d-2df38ca2eb47',
-//     role: 'user',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'Hello, how are you?'
-//       }
-//     ]
-//   },
-//   {
-//     id: '7a92b3c1-d5f8-4e76-b8a9-3c1e5fb2e0d8',
-//     role: 'assistant',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'I am doing well, thank you for asking! How can I assist you today?'
-//       }
-//     ]
-//   },
-//   {
-//     id: '9c84d6a7-8b23-4f12-a1d5-e7f3b9c05e2a',
-//     role: 'user',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'What is the current weather in Tokyo?'
-//       }
-//     ]
-//   },
-//   {
-//     id: 'b2e5f8c3-a1d9-4e67-b3f2-c9d8e7a6b5f4',
-//     role: 'assistant',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: "Based on the latest data, Tokyo is currently experiencing sunny weather with temperatures around 24°C (75°F). It's a beautiful day with clear skies."
-//       }
-//     ]
-//   },
-//   {
-//     id: '6045235a-a435-46b8-989d-2df38ca2eb47',
-//     role: 'user',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'Hello, how are you?'
-//       }
-//     ]
-//   },
-//   {
-//     id: '7a92b3c1-d5f8-4e76-b8a9-3c1e5fb2e0d8',
-//     role: 'assistant',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'I am doing well, thank you for asking! How can I assist you today?'
-//       }
-//     ]
-//   },
-//   {
-//     id: '9c84d6a7-8b23-4f12-a1d5-e7f3b9c05e2a',
-//     role: 'system',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'This is a message from system'
-//       }
-//     ]
-//   },
-//   {
-//     id: '9c84d6a7-8b23-4f12-a1d5-e7f3b9c05e2a',
-//     role: 'user',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: 'What is the current weather in Tokyo?'
-//       }
-//     ]
-//   },
-//   {
-//     id: 'b2e5f8c3-a1d9-4e67-b3f2-c9d8e7a6b5f4',
-//     role: 'assistant',
-//     parts: [
-//       {
-//         type: 'text',
-//         text: "Based on the latest data, Tokyo is currently experiencing sunny weather with temperatures around 24°C (75°F). It's a beautiful day with clear skies."
-//       }
-//     ]
-//   }
-// ])
 const localData = ref([])
 
+onMounted(async () => {
+  loading.value = true
+  await chat.getAll()
+    .then((res) => {
+      for (let i = 0; i < chat.all?.data?.length; i++) {
+        localData.value.push({
+          ...chat.all?.data[i],
+          id: generateId(),
+          parts: [{ type: 'text', text: chat.all?.data[i]?.content }]
+        })
+      }
+    })
+    .catch((error) => {
+      const description = error.errors 
+        ? Object.values(error.errors).flat()[0] 
+        : 'Please try again later.'
+      toast.add({ title: 'Error occured when loading past chat', description: error?.data?.message, color: 'error' })
+    })
+  loading.value = false
+})
+
+const generateId = () => Date.now().toString(36) + Math.random().toString(36).slice(2)
 const checkForm = () => {
   if (input.value) {
     submitForm()
@@ -236,7 +45,7 @@ const submitForm = async () => {
   await chat.send({ message: input.value })
     .then((res) => {
       localData.value.push({
-        id: uId,
+        id: generateId(),
         role: 'user',
         parts: [{ type: 'text', text: input.value }]
       })
@@ -244,11 +53,12 @@ const submitForm = async () => {
       loading.value.receive = true
       setTimeout(() => {
         localData.value.push({
-          id: uId,
+          id: generateId(),
           role: 'assistant',
           parts: [{ type: 'text', text: JSON.parse(JSON.stringify(res.data.reply)) }]
         })
         loading.value.receive = false
+        console.log(localData.value)
       }, 3000)
     })
     .catch((error) => {
@@ -261,7 +71,16 @@ const submitForm = async () => {
 <template>
   <div class="min-h-screen-main flex flex-col">
     <PageNavbar title="Quick learning" transparent :trigger-scroll-height="2" class="h-20" />
-    <UChatMessages v-if="localData.length >= 1" :messages="localData" :status="loading.receive ? 'submitted' : 'ready'" class="chat-messages pb-12 mb-auto" style="--last-message-height: auto;" />
+    <UChatMessages v-if="localData.length >= 1" :messages="localData" :status="loading.receive ? 'submitted' : 'ready'" class="chat-messages pb-12 mb-auto" style="--last-message-height: auto;">
+      <template #content="{ message }">
+        <Comark v-if="message.role === 'assistant'">
+          {{ message.content }}
+        </Comark>
+        <template v-else>
+          {{ message.content }}
+        </template>
+      </template>
+    </UChatMessages>
     <ErrorData404 v-else class="my-auto">
       Ask something to start learning 😉
     </ErrorData404>

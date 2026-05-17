@@ -53,12 +53,8 @@ body { @apply min-h-dvh; }
 }
 
 .chat-messages { @apply px-0; }
-.chat-messages [data-role="user"] [data-slot="content"] {
-  @apply py-2 px-3 rounded-2xl rounded-br-md border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700;
-}
-.chat-messages [data-role="system"] {
-  @apply text-center opacity-50;
-}
-.chat-messages[data-status="submitted"] [data-slot="indicator"] > * {
-  @apply bg-neutral-400 dark:bg-neutral-700;
-}
+.chat-messages [data-slot="container"] { @apply pb-0; }
+.chat-messages [data-role="user"] [data-slot="container"] { @apply max-w-[85%] pb-0 sm:max-w-[75%] lg:max-w-[85%]; }
+.chat-messages [data-role="user"] [data-slot="content"] { @apply min-h-0 py-2 px-3 rounded-2xl rounded-br-md border border-neutral-400 bg-neutral-200 dark:bg-neutral-700 dark:border-neutral-700; }
+.chat-messages [data-role="system"] { @apply text-center opacity-50; }
+.chat-messages[data-status="submitted"] [data-slot="indicator"] > * { @apply bg-neutral-400 dark:bg-neutral-700; }
